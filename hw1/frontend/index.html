@@ -28,8 +28,12 @@
 </body>
 
 <template id="edit-modal-template">
-  <div class="diary-form">
-    <h2 class="date">${diary.date}</h2>
+  <div class="diary-form" id="edit-form">
+    <h2 class="mode-indicator">編輯模式</h2>
+    <!-- <h2 class="date">${diary.date}</h2> -->
+    <label class="form-label" id="label-date-input">日期
+      <input type="date" id="date-input">
+    </label>
     <div id="container-input">
       <label class="form-label" id="label-tag-dropdown">標籤
         <select class="form-dropdown" id="tag-dropdown">
@@ -54,8 +58,9 @@
 </template>
 
 <template id="view-modal-template">
-  <div class="diary-form">
-    <h2 class="date">${diary.date}</h2>
+  <div class="diary-form" id="view-form">
+    <h2 class="mode-indicator">瀏覽模式</h2>
+    <h3 id="date-view">${diary.date}</h3>
     <div id="container-input">
       <label class="form-label">標籤
         <p id="tag-view">${diary.tags.join(', ')}</p>
@@ -63,7 +68,7 @@
       <label class="form-label">心情
         <p id="mood-view">心情: ${diary.mood}</p>
       </label>
-      <textarea id="diary-content-view" rows="5" cols="40">${diary.content}</textarea>
+      <textarea id="diary-content-view" rows="5" cols="40" placeholder="今天在想什麼？">${diary.content}</textarea>
       <button id="edit-diary-btn">編輯</button>
     </div>
   </div>
@@ -73,8 +78,12 @@
   <details id="" class="diary-card">
     <summary>
       <p class="diary-date">${diary.date}</p>
-      <p class="diary-tag">標籤: ${diary.tags.join(', ')}</p>
-      <p class="diary-mood">心情: ${diary.mood}</p>
+      <label class="card-label">標籤
+        <p class="diary-tag">${diary.tags.join(', ')}</p>
+      </label>
+      <label class="card-label">心情
+        <p class="diary-mood">${diary.mood}</p>
+      </label>
       <button class="open-diary-btn">打開日記頁</button>
     </summary>
     <p class="diary-content">${diary.content}</p>

@@ -33,7 +33,9 @@ app.use(cors(corsOptions));
 // To make the code more readable, we will use `router` to handle each resource.
 app.use("/api/diary", diaryRouter);
 // 指定傳入app的路徑是/api/diary時使用diaryRouter????
-
+// app.get("/heartbeat", (_, res) => {
+//   return res.send({ message: "Hello World!" });
+// });
 const port = process.env.PORT || 8000;
 
 // Connect to MongoDB

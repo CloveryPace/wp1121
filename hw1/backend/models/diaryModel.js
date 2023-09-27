@@ -34,9 +34,13 @@ const diarySchema = new mongoose.Schema(
   {
     toJSON: {
       transform(doc, ret) {
-        ret.id = ret.__id.toString();
-        delete ret.__id;
-        delete ret.__v;
+        if (!ret.__id === undefined) {
+          ret.id = ret.__id.toString();
+          delete ret.__id;
+        }
+        if (!ret.__v === undefined) {
+          delete ret.__v;
+        }
       },
     },
 

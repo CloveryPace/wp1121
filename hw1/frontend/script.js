@@ -1,14 +1,3 @@
-// Sample diary data
-const diaryData = [
-  { id: 1, date: "2023.09.06 (三)", tag: "school", mood: "happy", content: "今天完成了一個重要的項目！" },
-  { id: 2, date: "2023.09.05 (二)", tag: "relationship", mood: "angry", content: "和朋友吵了一架。" },
-  { id: 3, date: "2023.09.04 (一)", tag: "club", mood: "sad", content: "社團活動被取消了。" },
-  { id: 4, date: "2023.09.04 (一)", tag: "club", mood: "sad", content: "社團活動被取消了。" },
-  { id: 5, date: "2023.09.04 (一)", tag: "club", mood: "sad", content: "社團活動被取消了。" },
-  { id: 6, date: "2023.09.04 (一)", tag: "club", mood: "sad", content: "社團活動被取消了。" },
-  { id: 7, date: "2023.09.04 (一)", tag: "club", mood: "sad", content: "社團活動被取消了。" },
-];
-
 const diaryCardsContainer = document.querySelector('.diary-cards');
 const addDiaryBtn = document.getElementById('add-diary-btn');
 const diaryModal = document.querySelector('.diary-modal');
@@ -34,8 +23,19 @@ async function main() {
 }
 
 function setupEventListeners() {
-  const addDiaryBtn = document.getElementById('add-diary-btn');
-  addDiaryBtn.addEventListener("click", addDiary);
+  const addDiaryBtn = document.querySelector('#add-diary-btn');
+  addDiaryBtn.addEventListener("click", () => {
+    const today = new Date();
+
+    const newDiary = {
+      date: today,
+      tag: 'school',
+      mood: 'happy',
+      content: '',
+    };
+
+    openEditModal(newDiary, -1);
+  });
 }
 
 async function getDiaries() {
@@ -50,52 +50,57 @@ async function getDiaries() {
 
 // 新增日記
 async function addDiary() {
-  alert("add");
-  // const title = todoInput.value;
-  // const description = todoDescriptionInput.value;
-  // if (!title) {
-  //   alert("Please enter a todo title!");
-  //   return;
-  // }
-  // if (!description) {
-  //   alert("Please enter a todo description!");
-  //   return;
-  // }
-  // try {
-  //   const todo = await createTodo({ title, description });
-  //   renderTodo(todo);
-  // } catch (error) {
-  //   console.log(error.message);
-  //   alert("Failed to create todo!");
-  //   return;
-  // }
+
+  const editForm = document.querySelector("#edit-form");
+
+  // Get date
+  const datePicker = editForm.querySelector('#date-input');
+  const date = datePicker.valueAsDate;
+
+  // Get tag
+  const tagDropdown = editForm.querySelector('#tag-dropdown');
+  const tag = tagDropdown.value;
+
+  // Get mood
+  const moodDropdown = editForm.querySelector('#mood-dropdown');
+  const mood = moodDropdown.value;
+
+  // Get content
+  const contentTextArea = editForm.querySelector('#diary-content');
+  const content = contentTextArea.value;
+
+  // Chech Fields Validity
+  if (!date) {
+    alert("Please choose the date of your diary!");
+    return;
+  }
+  if (!tag) {
+    alert("Please choose the tag of your diary!");
+    return;
+  }
+  if (!mood) {
+    alert("Please choose the mood of your diary!");
+    return;
+  }
+  if (!content) {
+    alert("Some content is needed for a diary!");
+    return;
+  }
+
+  try {
+    const obj = { date, tag, mood, content };
+    const diary = await uploadDiary(obj);
+    renderDiary(diary);
+  } catch (error) {
+    console.log(error.message);
+    alert("Failed to create diary!");
+    return;
+  }
 }
 
-// Function to generate diary cards
-function generateDiaryCards() {
-  diaryCardsContainer.innerHTML = '';
-
-  diaryData.forEach((diary, index) => {
-    // uploadDiary({date, tag, mood, content});
-    // renderDiary(diary, index);
-
-    renderDiary(diary);
-
-    // const diaryCard = document.createElement('div');
-    // diaryCard.classList.add('diary-card');
-    // diaryCard.innerHTML = `
-    //       <p>${diary.date}</p>
-    //       <p>標籤: ${diary.tag.join(', ')}</p>
-    //       <p>心情: ${diary.mood}</p>
-    //   `;
-
-    // // Click event to view diary content
-    // diaryCard.addEventListener('click', () => {
-    //   openViewModal(diary, index);
-    // });
-
-    // diaryCardsContainer.appendChild(diaryCard);
-  });
+async function uploadDiary(diaryObj) {
+  const response = await instance.post("/diary", diaryObj);
+  return response.data;
 }
 
 // 讓頁面上出現日記卡
@@ -108,13 +113,12 @@ function renderDiary(diary) {
 function createDiaryElement(diary) {
   const item = diaryCardTemplate.content.cloneNode(true);
   const container = item.querySelector(".diary-card");
-  container.id = "diary-card-" + diary.id;
+  container.id = diary.id;
   console.log(container.id);
-  console.log(diary);
 
   // Set date on diary card
   const itemDate = item.querySelector("p.diary-date");
-  itemDate.innerText = diary.date;
+  itemDate.innerText = formatDate(diary.date);
 
   // Set tag on diary card
   const itemTag = item.querySelector("p.diary-tag");
@@ -128,23 +132,16 @@ function createDiaryElement(diary) {
   const itemContent = item.querySelector("p.diary-content");
   itemContent.innerText = diary.content;
 
-  item.addEventListener("click", openViewModal(diary))
-  return item;
+  // Set view button listener
+  const viewBtn = item.querySelector(".open-diary-btn");
+  viewBtn.addEventListener("click", () => {
+    openViewModal(diary)
+  });
 
+  return item;
 }
 // Function to display diary content in the modal
-function openViewModal(diary, index) {
-  /*
-  const diaryForm = document.createElement('div');
-  diaryForm.classList.add('diary-form');
-  diaryForm.innerHTML = `
-      <h2>${diary.date}</h2>
-      <p>標籤: ${diary.tag.join(', ')}</p>
-      <p>心情: ${diary.mood}</p>
-      <textarea id="diary-content" rows="5" cols="40">${diary.content}</textarea>
-      <button id="edit-diary-btn">編輯</button>
-      `;
-  */
+function openViewModal(diary) {
 
   // get diary by id
   // try {
@@ -153,8 +150,8 @@ function openViewModal(diary, index) {
 
   const viewForm = viewModalTemplate.content.cloneNode(true);
   // Set date
-  const dateView = viewForm.querySelector('h2.date');
-  dateView.innerText = diary.date;
+  const dateView = viewForm.querySelector('#date-view');
+  dateView.innerText = formatDate(diary.date);
 
   // Set tag
   const tagView = viewForm.querySelector('p#tag-view');
@@ -173,7 +170,7 @@ function openViewModal(diary, index) {
 
   // Click event to switch to edit mode
   editBtn.addEventListener('click', () => {
-    openEditModal(diary, index);
+    openEditModal(diary);
   });
 
   diaryModal.innerHTML = '';
@@ -182,13 +179,17 @@ function openViewModal(diary, index) {
 }
 
 // Function to edit diary content
-function openEditModal(diary, index) {
+function openEditModal(diary) {
   // const template = document.querySelector('.diary-modal-template')
   const editForm = editModalTemplate.content.cloneNode(true);
 
+  // // Set date
+  // const dateHeader = editForm.querySelector('h2.date');
+  // dateHeader.innerText = formatDate(diary.date);
+
   // Set date
-  const datePicker = editForm.querySelector('h2.date');
-  datePicker.innerText = diary.date;
+  const datePicker = editForm.querySelector('#date-input');
+  datePicker.valueAsDate = new Date(diary.date);
 
   // Set tag
   const tagDropdown = editForm.querySelector('#tag-dropdown');
@@ -202,26 +203,16 @@ function openEditModal(diary, index) {
   const contentTextArea = editForm.querySelector('#diary-content');
   contentTextArea.innerText = diary.content;
 
-  // const diaryForm2 = document.createElement('div');
-  // diaryForm.classList.add('diary-form');
-  // diaryForm.innerHTML = `
-  //     <h2>${diary.date}</h2>
-  //     <p>標籤: ${diary.tag.join(', ')}</p>
-  //     <p>心情: ${diary.mood}</p>
-  //     <textarea id="diary-content" rows="5" cols="40">${diary.content}</textarea>
-  //     <button id="save-diary-btn">儲存</button>
-  //     <button id="cancel-diary-btn">取消</button>
-  // `;
-
   const saveBtn = editForm.querySelector('#save-diary-btn');
   const cancelBtn = editForm.querySelector('#cancel-diary-btn');
-  const diaryContentTextarea = editForm.querySelector('#diary-content');
   const viewBtn = editForm.querySelector('#view-diary-btn');
 
   // Click event to save edited content
   saveBtn.addEventListener('click', () => {
-    diaryData[index].content = diaryContentTextarea.value;
-    generateDiaryCards();
+    // diaryData[index].content = diaryContentTextarea.value;
+    // generateDiaryCards();
+    addDiary();
+    // updateDiaryStatus(diary.id, diary);
     diaryModal.style.display = 'none';
   });
 
@@ -233,11 +224,13 @@ function openEditModal(diary, index) {
   // Click event to go back to view modal
   viewBtn.addEventListener('click', () => {
     diaryModal.style.display = 'none';
-    openViewModal();
+    openViewModal(diary, -1);
   });
 
   diaryModal.innerHTML = '';
   diaryModal.appendChild(editForm);
+  diaryModal.style.display = 'flex';
+
 }
 
 // Function to get the day of the week
@@ -247,25 +240,22 @@ function getDayOfWeek(date) {
 }
 
 function formatDate(date) {
+  const parsedDate = new Date(date);
+  return `${parsedDate.getFullYear()}.${String(parsedDate.getMonth() + 1).padStart(2, '0')}.${String(parsedDate.getDate()).padStart(2, '0')} (${getDayOfWeek(parsedDate)})`;
 }
 
 // Click event to open a blank diary for editing
 addDiaryBtn.addEventListener('click', () => {
   const today = new Date();
-  const formattedDate = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')} (${getDayOfWeek(today)})`;
 
   const newDiary = {
-    date: formattedDate,
+    date: today,
     tag: '',
     mood: '',
     content: '',
   };
 
-  openEditModal(newDiary, -1);
+  openEditModal(newDiary);
 });
 
-
-// Initial generation of diary cards
-console.log(instance);
-generateDiaryCards();
-// main();
+main();
