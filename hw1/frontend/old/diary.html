@@ -1,0 +1,49 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style-diary.css">
+  <script defer src="diary.js"></script>
+  <title>日記頁</title>
+</head>
+
+<body>
+  <h1>日記</h1>
+  <div class="container-all">
+    <div class="container-row">
+      <label>日期
+        <input type="date" id="date-picker">
+      </label>
+    </div>
+    <div id="container-input">
+      <label class="form-label">標籤
+        <select id="tag-dropdown">
+          <option value="school">學業</option>
+          <option value="relationship">人際</option>
+          <option value="club">社團</option>
+        </select>
+      </label>
+      <label class="form-label">心情
+        <select id="mood-dropdown">
+          <option value="happy">快樂</option>
+          <option value="angry">生氣</option>
+          <option value="sad">難過</option>
+        </select>
+      </label>
+      <button id="btn-mode">編輯</button>
+    </div>
+    <textarea name="daily-entry" id="entry" placeholder="今天想寫點什麼？" class="entry-text-box"></textarea>
+    <div class="btn-container">
+      <button class="action-btn" id="btn-save">儲存</button>
+      <button class="action-btn" id="btn-cancel">取消</button>
+    </div>
+  </div>
+  <section id="diaires"></section>
+</body>
+
+<template id="diary-item-template">
+  <p class="diary-content"></p>
+</template>
+
+</html>

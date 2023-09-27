@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 // Routes
 import diaryRouter from "./routes/diaryInterface.js";
 
+// 從.env讀取環境變數
 dotenv.config();
 
 const app = express();
@@ -31,11 +32,7 @@ app.use(cors(corsOptions));
 
 // To make the code more readable, we will use `router` to handle each resource.
 app.use("/api/diary", diaryRouter);
-// 指定傳入app的url default的路徑是/api/todos
-
-app.get("/heartbeat", (_, res) => {
-  return res.send({ message: "Hello Worldkoefkoe!" });
-});
+// 指定傳入app的路徑是/api/diary時使用diaryRouter????
 
 const port = process.env.PORT || 8000;
 

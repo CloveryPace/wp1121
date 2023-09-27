@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>My Diary</title>
+</head>
+
+<body>
+  <header>
+    <h1>My Diary</h1>
+  </header>
+  <main>
+    <div class="diary-cards">
+      <!-- Diary cards will be generated here -->
+    </div>
+    <button id="add-diary-btn">新增日記卡</button>
+  </main>
+  <div class="diary-modal">
+    <!-- Diary content and editing form will be displayed here -->
+  </div>
+  <script src="script.js"></script>
+</body>
+
+<template id="diary-modal-template">
+  <h2>${diary.date}</h2>
+  <p>標籤: ${diary.tags.join(', ')}</p>
+  <p>心情: ${diary.mood}</p>
+  <textarea id="diary-content" rows="5" cols="40">${diary.content}</textarea>
+  <button id="edit-diary-btn">編輯</button>
+</template>
+
+<template id="diary-card-template">
+  <p>${diary.date}</p>
+  <p>標籤: ${diary.tags.join(', ')}</p>
+  <p>心情: ${diary.mood}</p>
+</template>
+
+</html>

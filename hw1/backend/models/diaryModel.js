@@ -17,14 +17,17 @@ const diarySchema = new mongoose.Schema(
     //   required: true,
     //   default: () => Date.now(), // 每次插入新日記就執行
     // },
-    content: {
+    date: {
+      type: Date
+    },
+    tag: {
       type: String
     },
-    tags: {
-      type: [String] // array of string
+    mood: {
+      type: String
     },
-    moods: {
-      type: [String] // array of string
+    content: {
+      type: String
     }
   },
 
@@ -37,7 +40,7 @@ const diarySchema = new mongoose.Schema(
       },
     },
 
-    timestamps: true,
+    timestamps: true, // necessary?
   }
 );
 
