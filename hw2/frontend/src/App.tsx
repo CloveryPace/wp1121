@@ -1,37 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 
-import viteLogo from "/vite.svg";
+import { PlaylistRemove as RemoveIcon } from '@mui/icons-material';
+import { PlaylistAdd as AddIcon } from '@mui/icons-material';
+import Button from '@mui/material/Button';
 
-import "./App.css";
-import reactLogo from "./assets/react.svg";
+import HeaderBar from './components/HeaderBar';
+import NewListDialog from './components/NewListDialog';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [newListDialogOpen, setNewListDialogOpen] = useState(false);
+  const [deleteModeOn, setDeleteModeOn] = useState(false);
 
   return (
     <>
-      <div className='abcd'></div>
-      <div className='abc'></div>
-      <div>
-        <a href='https://vitejs.dev' target='_blank' rel='noreferrer'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank' rel='noreferrer'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className='card'>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className='read-the-docs'>
-        Click on the Vite and React logos to learn more
-      </p>
+      <HeaderBar></HeaderBar>
+      <main className="mx-auto flex max-h-full flex-row gap-6 px-24 py-12">
+        <div>
+          <Button
+            variant="contained"
+            // className="w-80"
+            onClick={() => setNewListDialogOpen(true)}
+          >
+            <AddIcon className="mr-2" />
+            Add
+          </Button>
+          <Button
+            color="error"
+            variant="contained"
+            onClick={() => alert('delete')}
+          >
+            <RemoveIcon className="mr-2" />
+            Delete
+          </Button>
+        </div>
+        <NewListDialog
+          open={newListDialogOpen}
+          onClose={() => setNewListDialogOpen(false)}
+        ></NewListDialog>
+      </main>
     </>
   );
 }
