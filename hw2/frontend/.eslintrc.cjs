@@ -28,6 +28,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
+    'no-unused-vars': 'off',
     'react/react-in-jsx-scope': 'off',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     '@typescript-eslint/consistent-type-imports': [

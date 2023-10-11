@@ -21,33 +21,33 @@ const client = axios.create({
 });
 
 export function getLists() {
-  return client.get<GetListsResponse>('/lists');
+  return client.get<GetListsResponse>('/playlists');
 }
 
 export function getSongs() {
-  return client.get<GetSongsResponse>('/cards');
+  return client.get<GetSongsResponse>('/songs');
 }
 
 export function createList(input: CreateListPayload) {
-  return client.post<CreateListResponse>('/lists', input);
+  return client.post<CreateListResponse>('/playlists', input);
 }
 
 export function createSong(input: CreateSongPayload) {
-  return client.post<CreateSongResponse>('/cards', input);
+  return client.post<CreateSongResponse>('/songs', input);
 }
 
 export function updateSong(id: string, input: UpdateSongPayload) {
-  return client.put<UpdateSongResponse>(`/cards/${id}`, input);
+  return client.put<UpdateSongResponse>(`/songs/${id}`, input);
 }
 
 export function updateList(id: string, input: UpdateListPayload) {
-  return client.put<UpdateListResponse>(`/lists/${id}`, input);
+  return client.put<UpdateListResponse>(`/playlists/${id}`, input);
 }
 
 export function deleteSong(id: string) {
-  return client.delete<DeleteSongResponse>(`/cards/${id}`);
+  return client.delete<DeleteSongResponse>(`/songs/${id}`);
 }
 
 export function deleteList(id: string) {
-  return client.delete<DeleteListResponse>(`/lists/${id}`);
+  return client.delete<DeleteListResponse>(`/playlists/${id}`);
 }
