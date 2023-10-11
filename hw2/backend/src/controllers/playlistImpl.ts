@@ -1,6 +1,6 @@
-import ListModel from "../models/playlistModel";
-import SongModel from "../models/songModel";
-import { genericErrorHandler } from "../utils/errors";
+import ListModel from '../models/playlistModel';
+import SongModel from '../models/songModel';
+import { genericErrorHandler } from '../utils/errors';
 import type {
   SongData,
   CreateListPayload,
@@ -8,15 +8,14 @@ import type {
   GetListsResponse,
   ListData,
   UpdateListPayload,
-} from "@lib/shared_types";
-import type { Request, Response } from "express";
+} from '@lib/shared_types';
+import type { Request, Response } from 'express';
 
 // Get all lists
 export const getLists = async (_: Request, res: Response<GetListsResponse>) => {
   try {
     const lists = await ListModel.find({});
 
-    // Return only the id and title of the list
     const listsToReturn = lists.map((list) => {
       return {
         id: list.id,
@@ -38,9 +37,9 @@ export const getList = async (
 ) => {
   try {
     const { id } = req.params;
-    const list = await ListModel.findById(id).populate("songs");
+    const list = await ListModel.findById(id).populate('songs');
     if (!list) {
-      return res.status(404).json({ error: "id is not valid" });
+      return res.status(404).json({ error: 'id is not valid' });
     }
 
     return res.status(200).json({
@@ -88,10 +87,10 @@ export const updateList = async (
 
     // If the list is not found, return 404
     if (!newList) {
-      return res.status(404).json({ error: "id is not valid" });
+      return res.status(404).json({ error: 'id is not valid' });
     }
 
-    return res.status(200).send("OK");
+    return res.status(200).send('OK');
   } catch (error) {
     genericErrorHandler(error, res);
   }
@@ -114,7 +113,7 @@ export const deleteList = async (
 
     // If the list is not found, return 404
     if (!deletedList) {
-      return res.status(404).json({ error: "id is not valid" });
+      return res.status(404).json({ error: 'id is not valid' });
     }
 
     // Delete all the songs in the list
@@ -125,7 +124,7 @@ export const deleteList = async (
     // Commit the transaction
     await session.commitTransaction();
 
-    return res.status(200).send("OK");
+    return res.status(200).send('OK');
   } catch (error) {
     // Rollback the transaction
     await session.abortTransaction();
