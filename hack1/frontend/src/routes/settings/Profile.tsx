@@ -84,9 +84,26 @@ const Profile = (): React.ReactNode => {
           {/* You should use a `Textarea` component */}
           {/* It should have a placeholder of "Tell us a little bit about yourself" */}
           {/* It is not required */}
+          <FormField
+            control={form.control}
+            name="bio"
+            render={() => (
+              <FormItem>
+                <FormLabel>Bio</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="Tell us a little bit about yourself"></Textarea>
+                </FormControl>
+                <FormDescription>
+                  This is your public display name. It will be visible to other
+                  when you post your code snippets. You can change it at any
+                  time.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Label>Bio</Label>
           <p className="text-destructive">{user.username}</p>
-          <Textarea placeholder="Tell us a little bit about yourself"></Textarea>
           {/* End of TODO 5.1 */}
           <FormField
             control={form.control}
