@@ -51,7 +51,7 @@ const View = (): React.ReactNode => {
     window.addEventListener('', () => {});
     return () => window.removeEventListener('', () => {});
     /* Hint 3: Update the dependency array of `useEffect` hook */
-  }, []);
+  }, [selectedIndex]);
   /* End TODO 2.3 */
 
   return post ? (

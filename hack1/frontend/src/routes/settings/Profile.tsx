@@ -105,9 +105,9 @@ const Profile = (): React.ReactNode => {
                     {/* Use the `GenderItem` component to render each item */}
                     {/* Send the `gender` as a prop to the `GenderItem` component */}
                     <p className="text-destructive">Gender</p>
-                    {genders.map((g: User['sex']) => (
+                    {/* {genders.map((g: User['sex']) => (
                       <GenderItem key={g} gender={g}></GenderItem>
-                    ))}
+                    ))} */}
                     {/* End of TODO 5.2 */}
                   </RadioGroup>
                 </FormControl>

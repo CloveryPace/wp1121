@@ -82,7 +82,7 @@ const Create = (): React.ReactNode => {
             {
               /* Hint 3.2.2: Get post data with `getPostByIndex` from `PostContext` */
             }
-            const post = getPostByIndex(0);
+            const post = getPostByIndex(postIndex);
             if (post === null) return <></>;
             return (
               <span
