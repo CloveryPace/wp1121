@@ -11,7 +11,7 @@ const View = (): React.ReactNode => {
   /* (1/3) TODO 2.2: Navigation with `ViewFooter` Buttons (8%) */
   /* Hint 2.2.1: Link page index to React state */
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const post = getPostByIndex(0);
+  const post = getPostByIndex(selectedIndex);
   /* End (1/3) TODO 2.2 */
 
   /* (3/3) TODO 2.2: Navigation with `ViewFooter` Buttons (8%) */
@@ -48,8 +48,13 @@ const View = (): React.ReactNode => {
       }
     };
     /* Hint 2: Add `handleKeyPress` function as event listener to keyboard input event */
-    window.addEventListener('', () => {});
-    return () => window.removeEventListener('', () => {});
+    window.addEventListener('keydown', (e: KeyboardEvent) => {
+      handleKeyPress({ code: e.key });
+    });
+    return () =>
+      window.removeEventListener('keydown', (e: KeyboardEvent) => {
+        handleKeyPress({ code: e.key });
+      });
     /* Hint 3: Update the dependency array of `useEffect` hook */
   }, [selectedIndex]);
   /* End TODO 2.3 */
@@ -74,8 +79,12 @@ const View = (): React.ReactNode => {
           upvoteClickHandler={() => {}}
           hasDownvoted={false}
           hasUpvoted={false}
-          nextClickHandler={() => {}}
-          prevClickHandler={() => {}}
+          nextClickHandler={() => {
+            handleNextClick;
+          }}
+          prevClickHandler={() => {
+            handlePrevClick;
+          }}
           totalVotes={0}
           loading={false}
         />
