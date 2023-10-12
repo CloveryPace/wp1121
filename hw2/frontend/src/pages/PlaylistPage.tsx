@@ -13,6 +13,7 @@ const PlaylistPage = () => {
   const [newSongDialogOpen, setNewSongDialogOpen] = useState(false);
   const { id } = useParams();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectAll, setSelectAll] = useState<boolean>(false);
 
   useEffect(() => {});
