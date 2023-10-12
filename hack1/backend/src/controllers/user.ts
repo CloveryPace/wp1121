@@ -34,10 +34,17 @@ export const createUser = asyncWrapper(
     /* Return 201 with new user */
     const { username, password } = req.body;
     try {
-      // const user = await UserModel.create({ username, password });
-      // return res.status(201).json({
-      //   id: user._id as string,
-      // });
+      const user = await UserModel.create({ username, password });
+      return res.status(201).json({
+        _id: user._id as Schema.Types.ObjectId,
+        username: user.username,
+        sex: user.sex,
+        bio: user.bio,
+        image: user.image,
+        upvotes: user.upvotes,
+        downvotes: user.downvotes,
+        posts: user.posts,
+      });
     } catch {
       throw new Error('`createUser` Not Implemented');
     }

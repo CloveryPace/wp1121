@@ -174,6 +174,7 @@ const AuthLayout = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm Password"
+                required
               />
               {/* End of TODO 1.5 */}
             </div>
