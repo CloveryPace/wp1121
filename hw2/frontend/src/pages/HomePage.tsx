@@ -28,6 +28,7 @@ const HomePage = () => {
     fetchLists();
     fetchSongs();
   }, [fetchSongs, fetchLists]);
+
   return (
     <>
       <div className="btns">
