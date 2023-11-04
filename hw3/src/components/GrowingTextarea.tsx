@@ -12,6 +12,7 @@ type GrowingTextareaProps = {
   placeholder?: string;
   value?: string;
   onChange?: (value: string) => void;
+  disabled?: boolean;
 };
 
 // this component implements a css hack that allows the textarea to grow with its content
@@ -24,7 +25,10 @@ type GrowingTextareaProps = {
 // https://react.dev/reference/react/forwardRef
 // 跨component以prop傳遞時因為會是copy沒辦法繼續綁定
 const GrowingTextarea = forwardRef<HTMLTextAreaElement, GrowingTextareaProps>(
-  ({ className, wrapperClassName, placeholder, value, onChange }, ref) => {
+  (
+    { className, wrapperClassName, placeholder, value, onChange, disabled },
+    ref,
+  ) => {
     return (
       <div
         className={cn(
@@ -58,6 +62,7 @@ const GrowingTextarea = forwardRef<HTMLTextAreaElement, GrowingTextareaProps>(
           }}
           onChange={(e) => onChange?.(e.target.value)}
           ref={ref} // 用了forwardRef才能繼續綁定
+          disabled={disabled}
         ></textarea>
       </div>
     );

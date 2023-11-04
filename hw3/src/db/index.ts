@@ -1,7 +1,7 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { Client } from 'pg';
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Client } from "pg";
 
-import { env } from '@/lib/env';
+import { env } from "@/lib/env";
 
 const client = new Client({
   connectionString: env.POSTGRES_URL,

@@ -7,7 +7,6 @@ import {
   timestamp,
   unique,
   varchar,
-  date,
 } from 'drizzle-orm/pg-core';
 
 // schemas define the structure of the tables in the database
@@ -30,7 +29,7 @@ export const usersTable = pgTable(
     // to the database as possible, so that you don't have to worry about them in
     // your application code.
     handle: varchar('handle', { length: 50 }).notNull().unique(),
-    // displayName: varchar("display_name", { length: 50 }).notNull(),
+    displayName: varchar('display_name', { length: 50 }).notNull(),
   },
   (table) => ({
     // indexes are used to speed up queries. Good indexes can make your queries
@@ -41,11 +40,10 @@ export const usersTable = pgTable(
 );
 
 export const eventsTable = pgTable(
-  'events',
+  'tweets',
   {
     id: serial('id').primaryKey(),
-    title: varchar('content', { length: 280 }).notNull(),
-    // 主辦人
+    content: varchar('content', { length: 280 }).notNull(),
     userHandle: varchar('user_handle', { length: 50 })
       .notNull()
       // this is a foreign key constraint. It ensures that the user_handle
@@ -57,53 +55,42 @@ export const eventsTable = pgTable(
         onDelete: 'cascade',
         onUpdate: 'cascade',
       }),
+    replyToTweetId: integer('reply_to_tweet_id'),
     createdAt: timestamp('created_at').default(sql`now()`),
-    startDate: date('date', { mode: 'date' }),
-    endDate: date('date', { mode: 'date' }),
+    // startDate: date('date', { mode: 'date' }),
+    // endDate: date('date', { mode: 'date' }),
   },
   (table) => ({
     userHandleIndex: index('user_handle_index').on(table.userHandle),
     createdAtIndex: index('created_at_index').on(table.createdAt),
+    // we can even set composite indexes, which are indexes on multiple columns
+    // learn more about composite indexes here:
+    // https://planetscale.com/learn/courses/mysql-for-developers/indexes/composite-indexes
+    replyToAndTimeIndex: index('reply_to_time_index').on(
+      table.replyToTweetId,
+      table.createdAt,
+    ),
   }),
 );
 
 // like這樣存是為了找「使用者like了哪篇文章」，如果把like直接存在tweet裡就沒辦法找（除非在使用者table也存著他like過什麼which is redundant
 export const joinsTable = pgTable(
-  'joins',
+  'likes',
   {
     id: serial('id').primaryKey(),
     userHandle: varchar('user_handle', { length: 50 })
       .notNull()
       .references(() => usersTable.handle, { onDelete: 'cascade' }),
-    eventId: integer('event_id')
+    tweetId: integer('tweet_id')
       .notNull()
       .references(() => eventsTable.id, { onDelete: 'cascade' }),
-    createdAt: timestamp('created_at').default(sql`now()`),
   },
   (table) => ({
-    eventIdIndex: index('tweet_id_index').on(table.eventId),
+    tweetIdIndex: index('tweet_id_index').on(table.tweetId),
     userHandleIndex: index('user_handle_index').on(table.userHandle),
-    // 確保一個人對同一個event只能join一次
-    uniqCombination: unique().on(table.userHandle, table.eventId),
-  }),
-);
-
-export const commentsTable = pgTable(
-  'comments',
-  {
-    id: serial('id').primaryKey(),
-    content: varchar('content', { length: 280 }).notNull(),
-    userHandle: varchar('user_handle', { length: 50 })
-      .notNull()
-      .references(() => usersTable.handle, { onDelete: 'cascade' }),
-    eventId: integer('event_id')
-      .notNull()
-      .references(() => eventsTable.id, { onDelete: 'cascade' }),
-    createdAt: timestamp('created_at').default(sql`now()`),
-  },
-  (table) => ({
-    eventIdIndex: index('tweet_id_index').on(table.eventId),
-    userHandleIndex: index('user_handle_index').on(table.userHandle),
-    // 同一人可以comment多次 -> 不需確保一個人對同一個event只能comment一次
+    // unique constraints ensure that there are no duplicate combinations of
+    // values in the table. In this case, we want to ensure that a user can't
+    // like the same tweet twice.
+    uniqCombination: unique().on(table.userHandle, table.tweetId),
   }),
 );
