@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { useState } from 'react';
@@ -5,6 +6,8 @@ import type { EventHandler, MouseEvent } from 'react';
 
 import useLike from '@/hooks/useLike';
 import { cn } from '@/lib/utils';
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 type LikeButtonProps = {
   initialLikes: number;
