@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 // zod is a library for runtime data validation
 // read more about zod here: https://zod.dev/

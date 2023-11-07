@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 export default function useLike() {
   const [loading, setLoading] = useState(false);
@@ -16,8 +16,8 @@ export default function useLike() {
     if (loading) return;
     setLoading(true);
 
-    const res = await fetch("/api/likes", {
-      method: "POST",
+    const res = await fetch('/api/likes', {
+      method: 'POST',
       body: JSON.stringify({
         tweetId,
         userHandle,
@@ -43,8 +43,8 @@ export default function useLike() {
     if (loading) return;
 
     setLoading(true);
-    const res = await fetch("/api/likes", {
-      method: "DELETE",
+    const res = await fetch('/api/likes', {
+      method: 'DELETE',
       body: JSON.stringify({
         tweetId,
         userHandle,

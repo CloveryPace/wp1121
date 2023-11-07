@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import useUserInfo from "@/hooks/useUserInfo";
-import { cn } from "@/lib/utils";
+import useUserInfo from '@/hooks/useUserInfo';
+import { cn } from '@/lib/utils';
 
 type UserAvatarProps = {
   className?: string;
@@ -16,7 +16,7 @@ export default function UserAvatar({ className }: UserAvatarProps) {
       alt="user avatar"
       width={48}
       height={48}
-      className={cn(className, "rounded-full")}
+      className={cn(className, 'rounded-full')}
     />
   );
 }

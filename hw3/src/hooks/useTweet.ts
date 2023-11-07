@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 export default function useTweet() {
   const [loading, setLoading] = useState(false);
@@ -17,8 +17,8 @@ export default function useTweet() {
   }) => {
     setLoading(true);
 
-    const res = await fetch("/api/tweets", {
-      method: "POST",
+    const res = await fetch('/api/tweets', {
+      method: 'POST',
       body: JSON.stringify({
         handle,
         content,

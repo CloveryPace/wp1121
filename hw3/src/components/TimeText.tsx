@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 type TimeTextProps = {
   date: dayjs.ConfigType;

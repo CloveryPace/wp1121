@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 import {
   Bell,
@@ -11,12 +11,12 @@ import {
   Search,
   User,
   Users,
-} from "lucide-react";
+} from 'lucide-react';
 
-import larry from "@/assets/larry.png";
-import { cn } from "@/lib/utils";
+import larry from '@/assets/larry.png';
+import { cn } from '@/lib/utils';
 
-import ProfileButton from "./ProfileButton";
+import ProfileButton from './ProfileButton';
 
 export default function Header() {
   return (
@@ -75,7 +75,7 @@ function HeaderButton({ Icon, text, active }: HeaderButtonProps) {
           // prefixing a class with max-lg: makes it only apply to screen size below lg, this is the tailwind way of media queries
           // likewise, prefixing a class with lg: makes it only apply to screen size above lg
           // read more about tailwind responsive design here: https://tailwindcss.com/docs/responsive-design
-          className={cn("text-xl max-lg:hidden", active && "font-bold")}
+          className={cn('text-xl max-lg:hidden', active && 'font-bold')}
         >
           {text}
         </span>

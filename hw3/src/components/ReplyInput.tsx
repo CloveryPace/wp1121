@@ -10,6 +10,10 @@ import { cn } from '@/lib/utils';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 type ReplyInputProps = {
   replyToTweetId: number;
   replyToHandle: string;
