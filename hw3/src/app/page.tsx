@@ -15,6 +15,7 @@ type HomePageProps = {
   };
 };
 
+const a = 1;
 // Since this is a server component, we can do some server side processing
 // in the react component. This may seem crazy at first, but it's actually
 // a very powerful feature. It allows us to do the data fetching and rendering
