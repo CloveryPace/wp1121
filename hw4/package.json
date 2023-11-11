@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate": "drizzle-kit push:pg",
-    "prepare": "cd .. & husky install ./hw4/.husky"
+    "migrate": "drizzle-kit push:pg"
   },
   "dependencies": {
     "@faker-js/faker": "^8.1.0",
@@ -53,12 +52,5 @@
     "lint-staged": "^15.0.2",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.4"
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "prettier --write",
-      "eslint --fix .",
-      "git add"
-    ]
   }
 }
