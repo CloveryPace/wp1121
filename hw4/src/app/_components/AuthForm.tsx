@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 
 // Run: npx shadcn-ui@latest add button
 import { Button } from '@/components/ui/button';
 // Run: npx shadcn-ui@latest add card
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { publicEnv } from '@/lib/env/public';
 
 import AuthInput from './AuthInput';
 
@@ -18,24 +20,23 @@ function AuthForm() {
 	const [confirmPassword, setConfirmPassword] = useState<string>('');
 	const [isSignUp, setIsSignUp] = useState<boolean>(false);
 
-	// const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-	//   e.preventDefault();
-	//   // TODO: sign in logic
-	//   signIn("credentials", {
-	//     email,
-	//     username,
-	//     password,
-	//     callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/docs`,
-	//   });
-	// };
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		// TODO: sign in logic
+		signIn('credentials', {
+			email,
+			username,
+			password,
+			callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/chats`,
+		});
+	};
 	return (
 		<Card className="min-w-[300px]">
 			<CardHeader>
 				<CardTitle>Sign {isSignUp ? 'Up' : 'In'}</CardTitle>
 			</CardHeader>
 			<CardContent className=" flex flex-col gap-2">
-				{/* <form onSubmit={handleSubmit} className="flex flex-col gap-2"> */}
-				<form className="flex flex-col gap-2">
+				<form onSubmit={handleSubmit} className="flex flex-col gap-2">
 					<AuthInput
 						label="Email"
 						type="email"
