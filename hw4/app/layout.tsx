@@ -1,27 +1,27 @@
-import './globals.css';
-import AuthContext from './context/AuthContext';
-import ActiveStatus from './components/ActiveStatus';
-import ToasterContext from './context/ToasterContext';
+import "./globals.css";
+import AuthContext from "./context/AuthContext";
+import ActiveStatus from "./components/ActiveStatus";
+import ToasterContext from "./context/ToasterContext";
 
 export const metadata = {
-	title: 'Web Programming HW4',
-	description: 'Messenger Clone',
+  title: "Web Programming HW4",
+  description: "Messenger Clone",
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-	return (
-		<html lang="en">
-			<body>
-				<AuthContext>
-					<ToasterContext />
-					<ActiveStatus />
-					{children}
-				</AuthContext>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en">
+      <body>
+        <AuthContext>
+          <ToasterContext />
+          <ActiveStatus />
+          {children}
+        </AuthContext>
+      </body>
+    </html>
+  );
 }
