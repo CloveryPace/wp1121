@@ -33,7 +33,9 @@ export default function CreateProjectForm() {
 
       // TODO: 5. After creating a project, redirect to the project page
       // hint: Why are some variables unused?
-      router.push(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${newProject.id}`);
+      router.push(
+        `${publicEnv.NEXT_PUBLIC_BASE_URL}/projects/${newProject.id}`,
+      );
       // TODO: 5. end
     } catch (error) {
       if (error instanceof Error) {
