@@ -11,13 +11,13 @@ import { Button } from "@/components/ui/button";
 import { publicEnv } from "@/lib/env/public";
 
 export default function SignOutButton() {
-  // const { data: session } = useSession();
+  const { data: session } = useSession();
   // const router = useRouter();
 
   const handleSignOut = async () => {
-    // if (session) {
-    //   signOut({ callbackUrl: publicEnv.NEXT_PUBLIC_BASE_URL });
-    // }
+    if (session) {
+      signOut({ callbackUrl: publicEnv.NEXT_PUBLIC_BASE_URL });
+    }
     // router.push("/");
   };
   return (
