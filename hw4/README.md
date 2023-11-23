@@ -69,4 +69,4 @@ database名稱在mongoDB網站中下圖紅框處的位置可以找到
 
 ### 3. Pusher
 
-請參考[112-1-unit2-notion-clone的README.md的Pusher Setup部分](https://github.com/ntuee-web-programming/112-1-unit2-notion-clone/blob/main/README.md#pusher-setup)
+請參考[112-1-unit2-notion-clone的README.md的Pusher Setup部分](https://github.com/ntuee-web-programming/112-1-unit2-notion-clone/blob/main/README.md#pusher-se
